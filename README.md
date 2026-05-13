@@ -1,145 +1,185 @@
-# Creative 3D Portfolio Website
+﻿# Oshanda Geethanjana Portfolio (PHP + MySQL + AJAX)
 
-A modern and creative personal portfolio website built using PHP, HTML, CSS, JavaScript, and Three.js. This project is designed to showcase personal details, skills, services, projects, experience, and contact information through a professional, responsive, and interactive web interface.
-
-## Repository Description
-
-A modern creative portfolio website built with PHP, HTML, CSS, JavaScript, and Three.js, featuring a premium responsive UI, interactive 3D visuals, smooth animations, project showcase, and contact section.
+Production-ready personal portfolio system built for XAMPP using pure PHP, MySQL, JavaScript, AJAX, and HTML5 (no framework build tools).
 
 ## Overview
 
-This Creative 3D Portfolio Website is developed as a professional personal branding platform for developers, designers, freelancers, IT students, and creative professionals. The website includes a clean modern layout, smooth animations, interactive sections, and a Three.js powered 3D visual experience.
+This project includes:
+- Premium Apple-inspired white glassmorphism UI
+- Public pages: Home, About, Education, Works, Blogs, Courses, Contact
+- AJAX-powered dynamic sections (Works, Education, Courses)
+- Medium blog feed integration via server-side RSS parsing
+- Contact form with AJAX, honeypot anti-spam, validation, database storage
+- Simple admin panel for managing works, education, courses, and messages
+- Reusable includes (config, DB, helpers, SEO, header, footer)
+- SEO setup (meta tags, OG/Twitter tags, schema markup, robots, sitemap)
 
-The main goal of this project is to present personal information, technical skills, completed projects, services, and contact details in an attractive and professional way.
+## Stack
 
-## Features
+- PHP 8+
+- MySQL
+- JavaScript (Fetch API)
+- HTML5 + CSS3
+- Three.js + GLTFLoader (CDN)
+- Font Awesome (CDN)
 
-- Modern creative portfolio design
-- Interactive Three.js 3D hero section
-- Fully responsive layout
-- Smooth scrolling animations
-- Professional homepage design
-- About section
-- Skills and technologies section
-- Services section
-- Project showcase section
-- Experience section
-- Contact section
-- Mobile-friendly navigation
-- Clean and organized code structure
-- Easy to customize
-- Suitable for personal portfolio and GitHub showcase
+## Project Structure
 
-## Technologies Used
+```text
+portfolio-php/
+  index.php
+  about.php
+  education.php
+  works.php
+  blogs.php
+  courses.php
+  contact.php
 
-- PHP
-- HTML5
-- CSS3
-- JavaScript
-- Three.js
-- GSAP
-- Responsive Web Design
+  includes/
+    config.php
+    db.php
+    functions.php
+    seo.php
+    header.php
+    footer.php
 
-## Main Sections
+  api/
+    get_works.php
+    get_education.php
+    get_courses.php
+    get_medium_posts.php
+    submit_contact.php
 
-- Home
-- About
-- Skills
-- Services
-- Projects
-- Experience
-- Contact
+  admin/
+    index.php
+    login.php
+    logout.php
+    dashboard.php
+    works.php
+    education.php
+    courses.php
+    messages.php
+    save_work.php
+    save_education.php
+    save_course.php
+    delete_item.php
 
-## Project Purpose
+  assets/
+    images/
+    icons/
+    uploads/
 
-The purpose of this project is to create a professional online portfolio that helps users present their personal brand, technical knowledge, creative skills, and completed work. This portfolio can be used by web developers, UI/UX designers, students, freelancers, and software engineering learners.
+  models/
+    character.glb
+    education.glb
+    works.glb
+    courses.glb
+    contact.glb
 
-## Folder Structure
+  database/
+    portfolio.sql
 
-creative-3d-portfolio/
-│
-├── assets/
-│   ├── images/
-│   ├── icons/
-│   ├── models/
-│   └── videos/
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   ├── main.js
-│   └── three-scene.js
-│
-├── includes/
-│   ├── header.php
-│   ├── footer.php
-│   └── config.php
-│
-├── pages/
-│   ├── about.php
-│   ├── projects.php
-│   └── contact.php
-│
-├── index.php
-└── README.md
+  partials/
+    home-hero.php
+    home-featured-works.php
+    home-featured-courses.php
+    home-education-preview.php
+    home-blog-preview.php
+    home-contact-cta.php
 
-## Installation
+  css/
+  js/
+  robots.txt
+  sitemap.xml
+  manifest.json
+  .htaccess
+```
 
-Clone the repository:
+## Setup (XAMPP)
 
-git clone https://github.com/your-username/creative-3d-portfolio.git
+1. Copy folder to: `C:\xampp\htdocs\portfolio\portfolio-php`
+2. Start **Apache** and **MySQL** from XAMPP control panel.
+3. Open phpMyAdmin: [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
+4. Import SQL file: `database/portfolio.sql`
+5. Edit DB credentials in `includes/config.php` if needed:
+   - `database.host`
+   - `database.port`
+   - `database.name`
+   - `database.username`
+   - `database.password`
+6. Open site: [http://localhost/portfolio/portfolio-php/index.php](http://localhost/portfolio/portfolio-php/index.php)
 
-Move the project folder into your local server directory.
+## Default Admin Login
 
-For XAMPP:
+- URL: [http://localhost/portfolio/portfolio-php/admin/login.php](http://localhost/portfolio/portfolio-php/admin/login.php)
+- Username: `admin`
+- Password: `Admin@123`
 
-htdocs/creative-3d-portfolio
+> Change this password immediately in production.
 
-Start Apache from the XAMPP Control Panel.
+## Personal Data Configuration
 
-Open the project in your browser:
+Edit `includes/config.php`:
+- Site identity (`site.name`, `site.brand_title`, `site.hero_tagline`)
+- Email and WhatsApp (`contact` section)
+- Social links (`social` section)
+- Medium feed username/url (`medium` section)
+- Availability and location (`site.availability`, `site.location`)
 
-http://localhost/creative-3d-portfolio/
+## Medium Fetching Logic
 
-## Customization
+- Endpoint: `api/get_medium_posts.php`
+- Uses server-side RSS fetch from: `https://medium.com/feed/@oshandageethanjana`
+- Parses XML safely using `simplexml_load_string` with safe flags
+- Extracts title, URL, image (if found), excerpt, publish date, reading time
+- Frontend loads posts asynchronously via AJAX on Home and Blogs pages
 
-You can customize this project easily:
+## 3D Model Setup
 
-- Update personal details in index.php
-- Change colors and layout styles in css/style.css
-- Update animations in js/main.js
-- Modify the 3D scene in js/three-scene.js
-- Add your own images inside assets/images/
-- Add your own icons inside assets/icons/
-- Add your own 3D models inside assets/models/
-- Update project details in the projects section
+- Place valid `.glb` files in `/models` with these names:
+  - `character.glb`
+  - `education.glb`
+  - `works.glb`
+  - `courses.glb`
+  - `contact.glb`
+- Current files are placeholders. Replace them with real GLB models.
+- If a model fails to load or WebGL is unavailable, pages continue working with fallback behavior.
 
-## Suitable For
+## Security Notes
 
-- Personal portfolio website
-- Developer portfolio
-- Creative developer showcase
-- UI/UX designer portfolio
-- Student project
-- Freelancer portfolio
-- GitHub project showcase
+- Prepared statements everywhere for DB operations
+- Output escaping helper for rendered HTML
+- CSRF token validation for admin and contact submission
+- Session hardening (cookie flags + regenerate ID)
+- Honeypot anti-spam field on contact form
+- URL/email/server validation on input handlers
 
-## Future Improvements
+## Troubleshooting
 
-- Admin dashboard for portfolio management
-- Dynamic project upload system
-- Blog section
-- Contact form email integration
-- Database-based project management
-- Dark and light theme switcher
-- More advanced Three.js animations
-- SEO optimization
+1. **Database connection error**
+   - Check credentials in `includes/config.php`
+   - Ensure MySQL is running and `portfolio_db` exists
 
-## Author
+2. **Medium posts not loading**
+   - Verify internet access from PHP environment
+   - Check `allow_url_fopen` in PHP settings
+   - Ensure Medium feed URL is reachable
 
-Developed by Oshanda Geethanjana.
+3. **3D model not visible**
+   - Replace placeholder `.glb` files with valid models
+   - Open browser console for GLTF errors
 
-## License
+4. **Admin login fails**
+   - Re-import `database/portfolio.sql`
+   - Confirm default credentials above
 
-This project is open-source and available for learning, customization, and portfolio use.
+5. **404 for clean URLs**
+   - Ensure Apache `mod_rewrite` is enabled
+   - Keep `.htaccess` in project root
+
+## Production Notes
+
+- Update `site.base_url` in `includes/config.php` to your live domain
+- Use HTTPS in production
+- Rotate admin password
+- Replace all placeholder assets and models
